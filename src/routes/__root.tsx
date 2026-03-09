@@ -6,7 +6,7 @@ import { api } from "../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { LoginDrawer } from "@/components/LoginDrawer";
 import { LogReadingDrawer } from "@/components/LogReadingDrawer";
-import { BookOpen, LogIn, LogOut, Plus, ChevronDown } from "lucide-react";
+import { LogIn, LogOut, Plus, ChevronDown } from "lucide-react";
 
 export const Route = createRootRoute({
   component: RootLayout,
@@ -42,7 +42,7 @@ function RootLayout() {
       <header className="sticky top-0 z-40 border-b border-white/[0.10] bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-2xl items-center justify-between px-4">
           <div className="flex items-center gap-2">
-            <BookOpen className="size-5 text-amber-500" />
+            <img src="/VerseTrack Favicon.jpeg" alt="VerseTrack" className="size-8 rounded" />
             <h1 className="text-lg font-semibold tracking-tight">
               VerseTrack
             </h1>
