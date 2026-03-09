@@ -6,6 +6,9 @@ import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
 import { ProgressBar } from "@/components/ProgressBar";
 import { UserProgressDrawer } from "@/components/UserProgressDrawer";
+import { LogReadingDrawer } from "@/components/LogReadingDrawer";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import { TOTAL_CHAPTERS } from "@/data/bible";
 
 export const Route = createFileRoute("/")({
@@ -16,6 +19,7 @@ function HomePage() {
   const { isAuthenticated } = useConvexAuth();
   const usersProgress = useQuery(api.queries.getAllUsersProgress);
 
+  const [logReadingOpen, setLogReadingOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<{
     userId: Id<"users">;
     name: string;
@@ -68,6 +72,19 @@ function HomePage() {
 
   return (
     <>
+      {isAuthenticated && (
+        <div className="mb-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setLogReadingOpen(true)}
+          >
+            <Plus className="size-4" data-icon="inline-start" />
+            Log Reading
+          </Button>
+        </div>
+      )}
+
       <div className="space-y-3">
         {usersProgress.map((user, index) => {
           const percentage = (user.chaptersRead / TOTAL_CHAPTERS) * 100;
@@ -120,6 +137,13 @@ function HomePage() {
           userId={selectedUser.userId}
           userName={selectedUser.name}
           chaptersRead={selectedUser.chaptersRead}
+        />
+      )}
+
+      {isAuthenticated && (
+        <LogReadingDrawer
+          open={logReadingOpen}
+          onOpenChange={setLogReadingOpen}
         />
       )}
     </>

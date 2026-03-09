@@ -5,8 +5,7 @@ import { useAuthActions } from "@convex-dev/auth/react";
 import { api } from "../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { LoginDrawer } from "@/components/LoginDrawer";
-import { LogReadingDrawer } from "@/components/LogReadingDrawer";
-import { LogIn, LogOut, Plus, ChevronDown } from "lucide-react";
+import { LogIn, LogOut, ChevronDown } from "lucide-react";
 
 export const Route = createRootRoute({
   component: RootLayout,
@@ -20,7 +19,6 @@ function RootLayout() {
     isAuthenticated ? {} : "skip"
   );
   const [loginOpen, setLoginOpen] = useState(false);
-  const [logReadingOpen, setLogReadingOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -49,17 +47,6 @@ function RootLayout() {
           </div>
 
           <div className="flex items-center gap-2">
-            {isAuthenticated && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setLogReadingOpen(true)}
-              >
-                <Plus className="size-4" data-icon="inline-start" />
-                Log Reading
-              </Button>
-            )}
-
             {isLoading ? (
               <div className="h-7 w-16 animate-pulse rounded-lg bg-white/[0.08]" />
             ) : isAuthenticated ? (
@@ -105,12 +92,6 @@ function RootLayout() {
       </main>
 
       <LoginDrawer open={loginOpen} onOpenChange={setLoginOpen} />
-      {isAuthenticated && (
-        <LogReadingDrawer
-          open={logReadingOpen}
-          onOpenChange={setLogReadingOpen}
-        />
-      )}
     </div>
   );
 }
