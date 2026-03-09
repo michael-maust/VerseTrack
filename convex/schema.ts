@@ -23,4 +23,18 @@ export default defineSchema({
     .index("by_user", ["userId"])
     .index("by_user_book", ["userId", "book"])
     .index("by_user_book_chapter", ["userId", "book", "chapter"]),
+
+  readingRuns: defineTable({
+    userId: v.id("users"),
+    name: v.optional(v.string()),
+    completedAt: v.number(),
+    totalChaptersRead: v.number(),
+    entries: v.array(
+      v.object({
+        book: v.string(),
+        chapter: v.number(),
+        dateRead: v.number(),
+      })
+    ),
+  }).index("by_user", ["userId"]),
 });

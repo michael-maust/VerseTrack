@@ -73,9 +73,8 @@ function HomePage() {
   return (
     <>
       {isAuthenticated && (
-        <div className="mb-4">
+        <div className="mb-4 flex justify-end">
           <Button
-            variant="outline"
             size="sm"
             onClick={() => setLogReadingOpen(true)}
           >

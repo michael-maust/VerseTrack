@@ -41,6 +41,63 @@ export const markChaptersRead = mutation({
   },
 });
 
+export const startFresh = mutation({
+  args: {
+    name: v.optional(v.string()),
+  },
+  handler: async (ctx, { name }) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
+
+    const user = await ctx.db.get(userId);
+    if (!user) throw new Error("User not found");
+
+    // Collect all current reading progress
+    const progress = await ctx.db
+      .query("readingProgress")
+      .withIndex("by_user", (q) => q.eq("userId", user._id))
+      .collect();
+
+    if (progress.length === 0) {
+      throw new Error("No reading progress to archive");
+    }
+
+    // Archive into a reading run
+    await ctx.db.insert("readingRuns", {
+      userId: user._id,
+      name: name || undefined,
+      completedAt: Date.now(),
+      totalChaptersRead: progress.length,
+      entries: progress.map((p) => ({
+        book: p.book,
+        chapter: p.chapter,
+        dateRead: p.dateRead,
+      })),
+    });
+
+    // Delete all current progress
+    for (const entry of progress) {
+      await ctx.db.delete(entry._id);
+    }
+  },
+});
+
+export const renameReadingRun = mutation({
+  args: {
+    runId: v.id("readingRuns"),
+    name: v.string(),
+  },
+  handler: async (ctx, { runId, name }) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
+
+    const run = await ctx.db.get(runId);
+    if (!run || run.userId !== userId) throw new Error("Not found");
+
+    await ctx.db.patch(runId, { name: name || undefined });
+  },
+});
+
 export const unmarkChaptersRead = mutation({
   args: {
     chapters: v.array(

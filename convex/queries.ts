@@ -77,6 +77,20 @@ export const getBookChapters = query({
   },
 });
 
+export const getReadingRuns = query({
+  args: { userId: v.id("users") },
+  handler: async (ctx, { userId }) => {
+    const runs = await ctx.db
+      .query("readingRuns")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .collect();
+
+    // Sort by completedAt descending (most recent first)
+    runs.sort((a, b) => b.completedAt - a.completedAt);
+    return runs;
+  },
+});
+
 export const currentUser = query({
   args: {},
   handler: async (ctx) => {
