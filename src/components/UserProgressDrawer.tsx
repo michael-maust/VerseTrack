@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { Id } from "../../convex/_generated/dataModel";
+import type { Id } from "../../convex/_generated/dataModel";
 import {
   Drawer,
   DrawerContent,
@@ -86,7 +86,7 @@ export function UserProgressDrawer({
                     return (
                       <div
                         key={date}
-                        className="flex items-start gap-3 rounded-lg bg-white/[0.02] px-3 py-2"
+                        className="flex items-start gap-3 rounded-lg bg-white/[0.06] px-3 py-2"
                       >
                         <span className="shrink-0 text-xs text-muted-foreground mt-0.5 w-12">
                           {date}
@@ -98,7 +98,7 @@ export function UserProgressDrawer({
                             return (
                               <span
                                 key={book}
-                                className="inline-block rounded-md bg-white/[0.04] px-2 py-0.5 text-xs text-foreground/80"
+                                className="inline-block rounded-md bg-white/[0.08] px-2 py-0.5 text-xs text-foreground/80"
                               >
                                 {book} {ranges}
                               </span>
@@ -125,7 +125,7 @@ export function UserProgressDrawer({
                     <button
                       key={book.name}
                       onClick={() => setSelectedBook(book.name)}
-                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors hover:bg-white/[0.03]"
+                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors hover:bg-white/[0.07]"
                     >
                       <span className="text-sm text-foreground/90 w-36 shrink-0 truncate">
                         {book.name}

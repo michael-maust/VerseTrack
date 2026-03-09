@@ -1,6 +1,6 @@
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { Id } from "../../convex/_generated/dataModel";
+import type { Id } from "../../convex/_generated/dataModel";
 import {
   Drawer,
   DrawerContent,
@@ -56,7 +56,7 @@ export function BookDetailDrawer({
                       ${
                         isRead
                           ? "bg-gradient-to-br from-amber-500/20 to-green-500/20 text-green-400 border border-green-500/20"
-                          : "bg-white/[0.03] text-muted-foreground border border-white/[0.04]"
+                          : "bg-white/[0.07] text-muted-foreground border border-white/[0.10]"
                       }
                     `}
                   >

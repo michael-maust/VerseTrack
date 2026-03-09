@@ -19,7 +19,7 @@ export function ProgressBar({
     <div className={cn("relative w-full", className)}>
       <div
         className={cn(
-          "w-full overflow-hidden rounded-full bg-white/[0.04]",
+          "w-full overflow-hidden rounded-full bg-white/[0.08]",
           size === "md" ? "h-3" : "h-2"
         )}
       >

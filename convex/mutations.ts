@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation } from "./_generated/server";
+import { getAuthUserId } from "@convex-dev/auth/server";
 
 export const markChaptersRead = mutation({
   args: {
@@ -11,14 +12,10 @@ export const markChaptersRead = mutation({
     ),
   },
   handler: async (ctx, { chapters }) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new Error("Not authenticated");
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
 
-    const user = await ctx.db
-      .query("users")
-      .withIndex("email", (q) => q.eq("email", identity.email!))
-      .first();
-
+    const user = await ctx.db.get(userId);
     if (!user) throw new Error("User not found");
 
     const now = Date.now();
@@ -54,14 +51,10 @@ export const unmarkChaptersRead = mutation({
     ),
   },
   handler: async (ctx, { chapters }) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new Error("Not authenticated");
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
 
-    const user = await ctx.db
-      .query("users")
-      .withIndex("email", (q) => q.eq("email", identity.email!))
-      .first();
-
+    const user = await ctx.db.get(userId);
     if (!user) throw new Error("User not found");
 
     for (const { book, chapter } of chapters) {

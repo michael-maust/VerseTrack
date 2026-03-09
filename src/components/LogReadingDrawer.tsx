@@ -17,6 +17,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { Check } from "lucide-react";
 import { BIBLE_BOOKS, OT_BOOKS, NT_BOOKS } from "@/data/bible";
 
 interface LogReadingDrawerProps {
@@ -175,6 +176,11 @@ export function LogReadingDrawer({ open, onOpenChange }: LogReadingDrawerProps) 
                         +{toggledForBook}
                       </span>
                     )}
+                    {readCount === book.chapters && (
+                      <span className="ml-auto mr-2 shrink-0 flex items-center justify-center size-5 rounded-full bg-green-500/20">
+                        <Check className="size-3 text-green-400" />
+                      </span>
+                    )}
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
@@ -207,7 +213,7 @@ export function LogReadingDrawer({ open, onOpenChange }: LogReadingDrawerProps) 
                               ${
                                 active
                                   ? "bg-gradient-to-br from-amber-500/25 to-green-500/25 text-green-400 border border-green-500/25"
-                                  : "bg-white/[0.03] text-muted-foreground border border-white/[0.05] hover:bg-white/[0.06]"
+                                  : "bg-white/[0.07] text-muted-foreground border border-white/[0.10] hover:bg-white/[0.12]"
                               }
                               ${hasChange ? "ring-1 ring-amber-500/40 scale-[1.02]" : ""}
                             `}

@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "convex/react";
 import { useConvexAuth } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { Id } from "../../convex/_generated/dataModel";
+import type { Id } from "../../convex/_generated/dataModel";
 import { ProgressBar } from "@/components/ProgressBar";
 import { UserProgressDrawer } from "@/components/UserProgressDrawer";
 import { TOTAL_CHAPTERS } from "@/data/bible";
@@ -28,10 +28,10 @@ function HomePage() {
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="animate-pulse rounded-xl bg-white/[0.02] border border-white/[0.04] p-5 space-y-3"
+            className="animate-pulse rounded-xl bg-white/[0.06] border border-white/[0.08] p-5 space-y-3"
           >
-            <div className="h-4 w-32 rounded bg-white/[0.04]" />
-            <div className="h-3 w-full rounded-full bg-white/[0.04]" />
+            <div className="h-4 w-32 rounded bg-white/[0.08]" />
+            <div className="h-3 w-full rounded-full bg-white/[0.08]" />
           </div>
         ))}
       </div>
@@ -41,7 +41,7 @@ function HomePage() {
   if (usersProgress.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="rounded-full bg-white/[0.03] p-4 mb-4">
+        <div className="rounded-full bg-white/[0.07] p-4 mb-4">
           <svg
             className="size-8 text-muted-foreground"
             fill="none"
@@ -87,11 +87,11 @@ function HomePage() {
               disabled={!isAuthenticated}
               className={`
                 animate-fade-in-up w-full text-left rounded-xl
-                border border-white/[0.04] bg-white/[0.015] p-5
+                border border-white/[0.08] bg-white/[0.05] p-5
                 transition-all duration-200
                 ${
                   isAuthenticated
-                    ? "hover:bg-white/[0.03] hover:border-white/[0.08] cursor-pointer"
+                    ? "hover:bg-white/[0.08] hover:border-white/[0.12] cursor-pointer"
                     : "cursor-default"
                 }
               `}
@@ -102,7 +102,7 @@ function HomePage() {
                   {user.name}
                 </span>
                 <span className="text-xs text-muted-foreground tabular-nums">
-                  {user.chaptersRead} / {TOTAL_CHAPTERS}
+                  {user.chaptersRead} / {TOTAL_CHAPTERS} ({percentage.toFixed(1)}%)
                 </span>
               </div>
               <ProgressBar percentage={percentage} showLabel={false} />
