@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation } from "./_generated/server";
+import { internal } from "./_generated/api";
 import { getAuthUserId } from "@convex-dev/auth/server";
 
 export const markChaptersRead = mutation({
@@ -19,6 +20,7 @@ export const markChaptersRead = mutation({
     if (!user) throw new Error("User not found");
 
     const now = Date.now();
+    const newlyMarked: { book: string; chapter: number }[] = [];
 
     for (const { book, chapter } of chapters) {
       // Check if already marked
@@ -36,7 +38,18 @@ export const markChaptersRead = mutation({
           chapter,
           dateRead: now,
         });
+        newlyMarked.push({ book, chapter });
       }
+    }
+
+    // Notify Discord if any new chapters were logged
+    if (newlyMarked.length > 0) {
+      const displayName =
+        (user.firstName || "") + (user.lastName ? ` ${user.lastName}` : "") || user.name || "Someone";
+      await ctx.scheduler.runAfter(0, internal.discord.notifyReadingLogged, {
+        userName: displayName,
+        chapters: newlyMarked,
+      });
     }
   },
 });

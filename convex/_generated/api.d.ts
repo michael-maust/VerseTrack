@@ -9,6 +9,9 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as crons from "../crons.js";
+import type * as discord from "../discord.js";
+import type * as discordHelpers from "../discordHelpers.js";
 import type * as http from "../http.js";
 import type * as mutations from "../mutations.js";
 import type * as queries from "../queries.js";
@@ -21,6 +24,9 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  crons: typeof crons;
+  discord: typeof discord;
+  discordHelpers: typeof discordHelpers;
   http: typeof http;
   mutations: typeof mutations;
   queries: typeof queries;
